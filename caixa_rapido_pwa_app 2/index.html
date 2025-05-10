@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Caixa</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Caixa</h1>
+    </header>
+    <main>
+        <div class="buttons">
+            <div class="product">
+                <button class="item-btn" data-item="Pão Francês">Pão Francês</button>
+                <span class="edit-icon" data-item="Pão Francês">✏️</span>
+            </div>
+            <div class="product">
+                <button class="item-btn" data-item="Pão Doce">Pão Doce</button>
+                <span class="edit-icon" data-item="Pão Doce">✏️</span>
+            </div>
+            <div class="product">
+                <button class="item-btn" data-item="Pão Doce Especial">Pão Doce Especial</button>
+                <span class="edit-icon" data-item="Pão Doce Especial">✏️</span>
+            </div>
+        </div>
+        <div class="outros">
+            <label>Outros:</label>
+            <input type="number" id="outrosInput" placeholder="Valor R$" />
+            <button id="addOutros">Adicionar</button>
+        </div>
+        <section class="nota">
+            <h2>Nota</h2>
+            <p id="total">Total: R$ 0,00</p>
+            <label>Valor Recebido: <input type="number" id="valorRecebido"></label>
+            <p id="troco">Troco: Aguardando pagamento</p>
+            <p class="erro" id="erroMsg"></p>
+            <button id="finalizar">Finalizar Venda</button>
+            <button id="limpar">Limpar</button>
+        </section>
+        <section>
+            <h2>Histórico de Vendas:</h2>
+            <div id="historico"></div>
+        </section>
+    </main>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js');
+            });
+        }
+    </script>
+</body>
+</html>
