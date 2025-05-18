@@ -1,0 +1,352 @@
+:root {
+  --primary-color: #FF5722;
+  --secondary-color: #FFC107;
+  --text-color: #212121;
+  --background-color: #FAFAFA;
+  --button-radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding-bottom: 4rem;
+  font-family: 'Poppins', sans-serif;
+  background: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 200px; /* space for keypad */
+}
+
+header h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin: 16px 0;
+}
+
+.buttons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 16px;
+}
+
+.bread-btn,
+#more-btn {
+  padding: 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: var(--button-radius);
+  background: var(--primary-color);
+  color: #fff;
+  cursor: pointer;
+}
+
+.bread-btn:hover,
+#more-btn:hover {
+  background: var(--secondary-color);
+}
+
+.summary {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: var(--button-radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.summary h2 {
+  margin-bottom: 8px;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+#summary-box {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  max-height: 120px;
+  overflow-y: auto;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+#summary-list {
+  list-style: none;
+}
+
+#summary-list li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  margin-bottom: 4px;
+}
+
+.summary p {
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.summary p.troco-line {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+#valor-recebido {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: right;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.action-buttons button {
+  flex: 1;
+  padding: 10px;
+  font-size: 0.875rem;
+  border: none;
+  border-radius: var(--button-radius);
+  background: var(--primary-color);
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Numeric keypad styles */
+.keypad {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-width: 400px;
+  background: #eee;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+}
+
+.keypad.hidden {
+  display: none;
+}
+
+.keypad button {
+  padding: 16px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: var(--button-radius);
+  background: #fff;
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  body {
+  padding-bottom: 4rem;
+    padding-bottom: 250px;
+  }
+}
+
+/* Alert box styles */
+#alert-box {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+#alert-box.hidden {
+  display: none;
+}
+.alert-content {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 80%;
+}
+#alert-close {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+/* Confirm box styles */
+#confirm-box {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+#confirm-box.hidden {
+  display: none;
+}
+.confirm-content {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 80%;
+}
+.confirm-content button {
+  margin: 8px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#confirm-sim {
+  background: #27ae60;
+  color: #fff;
+}
+#confirm-nao {
+  background: #e74c3c;
+  color: #fff;
+}
+
+
+/* Delete button uses trash-can icon */
+.delete-btn {
+  background: url('trash-can.png') no-repeat center center;
+  background-size: contain;
+  border: none;
+  width: 1.5em;
+  height: 1.5em;
+  margin-left: 8px;
+  cursor: pointer;
+  padding: 0;
+}
+
+
+/* ===== TECLADO REFACTORADO ===== */
+#num-keypad.keypad {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  grid-auto-rows: 60px !important;
+  gap: 8px !important;
+  padding: 10px !important;
+}
+
+#num-keypad.hidden {
+  display: none !important;
+}
+
+#num-keypad .actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 8px;
+}
+
+#num-keypad .actions button {
+  flex: 1;
+  font-size: 1.25rem;
+}
+
+/* Cores para ENTER (verde) e CLOSE (vermelho) */
+#num-keypad button[data-key="enter"] {
+  background-color: #27ae60;
+  color: #fff;
+}
+#num-keypad button[data-key="enter"]:hover {
+  background-color: #219150;
+}
+#num-keypad button[data-key="close"] {
+  background-color: #e74c3c;
+  color: #fff;
+}
+#num-keypad button[data-key="close"]:hover {
+  background-color: #c0392b;
+}
+
+/* Histórico de Venda button fixed at bottom */
+.history-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.375rem; height: 1.5rem;
+  background-color: #FF5722;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* History page styles */
+.history-container {
+  padding: 0.75rem; height: 3rem;
+  padding-bottom: 5rem; /* for back button */
+}
+
+#history-list {
+  list-style: none;
+  padding: 0;
+}
+
+#history-list li {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
+}
+
+.history-item-header {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.history-items-list {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+#back-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.75rem; height: 3rem;
+  background-color: #999;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+
+/* Meta info under each history item header */
+.history-item-meta {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
