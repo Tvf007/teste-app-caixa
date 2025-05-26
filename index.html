@@ -1,0 +1,543 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Caixa</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png">
+  
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;600;400&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href=\"https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap\" rel=\"stylesheet\">
+    
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 16px;
+      background: #FAFAFA;
+      color: #212121;
+    }
+    
+#titulo-caixa {
+  text-align: center;
+  color: #0277BD;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 2.8rem;
+  letter-spacing: 0.03em;
+  margin-top: 18px;
+  margin-bottom: 22px;
+}
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .buttons-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(to right, #039BE5, #0288D1);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+      flex: 1 1 calc(50% - 12px);
+      min-width: 120px;
+      text-align: center;
+    }
+    button:hover {
+      transform: scale(1.05);
+    }
+    .pay-btn.selected { background: #43A047 !important; }
+    .summary {
+      background: #ECEFF1;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .action-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    #summary-list {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 10px;
+    
+  max-height: 242px;
+  overflow-y: auto;
+  transition: box-shadow 0.2s;
+}
+    .summary-item {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      border-radius: 8px;
+      padding: 3px 6px 3px 8px;
+      transition: background 0.15s;
+    }
+    .summary-label {
+      font-size: 1rem;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .summary-price {
+      margin-left: 8px;
+      font-weight: bold;
+      color: #37474F;
+      min-width: 68px;
+      text-align: right;
+    }
+    .trash-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 3px 3px 3px 2px;
+      display: flex;
+      align-items: center;
+      margin-left: 0;
+      margin-right: 0;
+      transition: filter 0.2s;
+      flex-shrink: 0;
+      justify-self: end;
+    }
+    .trash-btn:hover img {
+      filter: brightness(0.7);
+    }
+    .trash-icon {
+      width: 26px;
+      height: 26px;
+      display: block;
+    }
+    #virtual-keyboard {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0px;
+      background: #fff;
+      border-top: 2px solid #bdbdbd;
+      box-shadow: 0 -2px 16px rgba(2,119,189,0.09);
+      border-radius: 18px 18px 0 0;
+      display: none;
+      z-index: 1000;
+      width: 100vw;
+      max-width: 360px;
+      padding: 6px 7px 10px 7px;
+      margin: 0 auto;
+    }
+    #virtual-display {
+      background: #ffe082;
+      color: #212121;
+      font-size: 1.7rem;
+      font-weight: bold;
+      border-radius: 8px;
+      padding: 8px 0;
+      margin-bottom: 7px;
+      text-align: right;
+      letter-spacing: 1px;
+    }
+    .vk-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 7px;
+    }
+    .vk-btn {
+      padding: 12px 0;
+      font-size: 1.1rem;
+      background: #0288d1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      min-width: 0;
+      min-height: 0;
+    }
+    .vk-btn:active {
+      background: #0277bd;
+      transform: scale(0.97);
+    }
+    .vk-action-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+    .vk-cancel {
+      background: #e53935 !important;
+      font-weight: bold;
+      min-width: 60px;
+    }
+    .vk-enter {
+      background: #43A047 !important;
+      font-weight: bold;
+      min-width: 80px;
+    }
+    #valor-recebido-area {
+      margin-bottom: 10px;
+    }
+    #valor-recebido {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.28rem;
+      margin: 10px 0 0 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      text-align: right;
+      background: #fffde7;
+      color: #333;
+      font-weight: bold;
+    }
+  
+#notification-box {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff3f3;
+  color: #c62828;
+  border: 2px solid #ef5350;
+  min-width: 220px;
+  max-width: 90vw;
+  padding: 18px 36px 18px 18px;
+  border-radius: 12px;
+  font-size: 1.08rem;
+  box-shadow: 0 4px 16px rgba(230,50,40,0.13);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  font-weight: 500;
+  animation: notification-in 0.21s;
+}
+@keyframes notification-in {
+  from { opacity: 0; transform: translate(-50%, -20px);}
+  to { opacity: 1; transform: translate(-50%, 0);}
+}
+#notification-close {
+  background: none;
+  border: none;
+  color: #b71c1c;
+  font-size: 1.3em;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 14px;
+  padding: 0 6px;
+  border-radius: 6px;
+  line-height: 1;
+}
+#notification-close:hover {
+  background: #ffeaea;
+}
+
+
+#total-area {
+  font-size: 1.62rem;
+  color: #0277BD;
+  font-weight: 700;
+  text-align: right;
+  margin: 18px 0 10px 0;
+  letter-spacing: 0.04em;
+}
+
+
+#troco-area {
+  font-size: 1.28rem;
+  color: #e53935;
+  font-weight: 700;
+  text-align: right;
+  margin: 6px 0 8px 0;
+  letter-spacing: 0.02em;
+}
+
+</style>
+</head>
+<body style="user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;" oncontextmenu="return false" onselectstart="return false">
+  <h1 id="titulo-caixa">Caixa</h1>
+  <div class="container">
+    <div class="buttons-grid">
+      <button class="bread-btn" data-label="Pão de Sal" data-price="0.70">Pão de Sal</button>
+      <button class="bread-btn" data-label="Pão Doce Comum" data-price="0.70">Pão Doce Comum</button>
+      <button class="bread-btn" data-label="Pão Doce Especial" data-price="0.80">Pão Doce Especial</button>
+      <button id="more-btn">Outros +</button>
+    </div>
+    <div class="summary">
+      <ul id="summary-list"></ul>
+      <div id="total-area">Total: R$ <span id="total">0,00</span></div>
+      <div id="valor-recebido-area" style="display:none;">
+        <input id="valor-recebido" placeholder="Valor Recebido" readonly>
+      </div>
+      <p id="troco-area" style="display:none;">Troco: R$ <span id="troco">0,00</span></p>
+      <div class="buttons-grid">
+        <button class="pay-btn" data-method="Dinheiro">Dinheiro</button>
+        <button class="pay-btn" data-method="Cartão/PIX">Cartão/PIX</button>
+      </div>
+    </div>
+    <div class="action-buttons">
+      <button id="clear-btn" style="background:#E53935;">Limpar</button>
+<button id="next-btn" style="background:#43A047;">Próximo Cliente</button>
+      
+    </div>
+    <br>
+    <button id="history-btn" style="background:#37474F;">Histórico de Venda</button>
+  </div>
+
+  <div id="virtual-keyboard">
+    <div style="display: flex; justify-content: flex-end;">
+      <button id="close-keyboard" style="font-size: 26px; background: none; border: none; color: #e53935; margin-bottom: 4px; cursor: pointer;">×</button>
+    </div>
+    <div id="virtual-display">0</div>
+    <div class="vk-grid">
+      <button class="vk-btn">1</button><button class="vk-btn">2</button><button class="vk-btn">3</button>
+      <button class="vk-btn">4</button><button class="vk-btn">5</button><button class="vk-btn">6</button>
+      <button class="vk-btn">7</button><button class="vk-btn">8</button><button class="vk-btn">9</button>
+      <button class="vk-btn">,</button><button class="vk-btn">0</button><button class="vk-btn">←</button>
+    </div>
+    <div class="vk-action-row">
+      <button class="vk-btn vk-cancel" id="vk-cancel">Cancelar</button>
+      <button class="vk-btn vk-enter" id="vk-enter">Confirmar</button>
+    </div>
+  </div>
+
+<script>
+const resumo = [];
+let total = 0;
+let formaPagamento = '';
+let virtualValue = '';
+let targetField = null;
+let editingItemIndex = null;
+
+function renderResumo() {
+  document.getElementById('summary-list').innerHTML = '';
+  total = 0;
+  [...resumo].reverse().forEach((item, idx, arr) => {
+    const realIndex = resumo.length - 1 - idx;
+    const li = document.createElement('li');
+    li.className = 'summary-item';
+
+    // Nome + qtd
+    const labelDiv = document.createElement('div');
+    labelDiv.className = 'summary-label';
+    labelDiv.textContent = `${item.qtd}x ${item.label}`;
+    li.appendChild(labelDiv);
+
+    // Valor
+    const valor = document.createElement('span');
+    const subtotal = item.qtd * item.preco;
+    total += subtotal;
+    valor.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+    valor.className = 'summary-price';
+    li.appendChild(valor);
+
+    // Lixeira (sempre na coluna mais à direita)
+    const trashBtn = document.createElement('button');
+    trashBtn.className = 'trash-btn';
+    trashBtn.title = "Remover item";
+    const trashImg = document.createElement('img');
+    trashImg.src = 'trash-can.png';
+    trashImg.alt = "Remover";
+    trashImg.className = 'trash-icon';
+    trashBtn.appendChild(trashImg);
+    trashBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      resumo.splice(realIndex, 1);
+      renderResumo();
+    });
+    li.appendChild(trashBtn);
+
+    // Editar quantidade ao clicar no item (menos lixeira)
+    li.addEventListener('click', function(e) {
+      if (e.target.closest('.trash-btn')) return;
+      editingItemIndex = realIndex;
+      virtualValue = '';
+      const item = resumo[realIndex];
+      if (item.label && item.label.toLowerCase() === 'outros') {
+        targetField = 'edit-preco';
+      } else {
+        targetField = 'edit-qtd';
+      }
+      document.getElementById('virtual-display').textContent = virtualValue;
+      document.getElementById('virtual-keyboard').style.display = 'block';
+    });
+
+    document.getElementById('summary-list').appendChild(li);
+  });
+  document.getElementById('total').textContent = total.toFixed(2).replace('.', ',');
+}
+
+document.querySelectorAll('.bread-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const label = btn.dataset.label;
+    const preco = parseFloat(btn.dataset.price);
+    const existente = resumo.find(i => i.label === label);
+    if (existente) existente.qtd += 1;
+    else resumo.push({ label, preco, qtd: 1 });
+    renderResumo();
+  });
+});
+
+function openKeyboard(forField) {
+  virtualValue = '';
+  targetField = forField;
+  document.getElementById('virtual-display').textContent = '0';
+  document.getElementById('virtual-keyboard').style.display = 'block';
+}
+
+document.getElementById('more-btn').addEventListener('click', () => openKeyboard('outros'));
+document.getElementById('valor-recebido').addEventListener('click', () => {
+  if (formaPagamento === 'Dinheiro') openKeyboard('recebido');
+});
+
+document.querySelectorAll('.vk-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const val = btn.textContent;
+    if (val === '←') virtualValue = virtualValue.slice(0, -1);
+    else if (val === ',') {
+      if (!virtualValue.includes(',')) virtualValue += ',';
+    }
+    else if (!isNaN(val)) virtualValue += val;
+    document.getElementById('virtual-display').textContent = virtualValue || '0';
+    if (window.navigator && window.navigator.vibrate) window.navigator.vibrate(15);
+  });
+});
+
+document.getElementById('close-keyboard').addEventListener('click', () => {
+  document.getElementById('virtual-keyboard').style.display = 'none';
+  editingItemIndex = null;
+});
+
+document.getElementById('vk-enter').addEventListener('click', () => {
+  const preco = parseFloat(virtualValue.replace(',', '.'));
+  if (!isNaN(preco) && preco > 0) {
+    if (targetField === 'outros') {
+      resumo.push({ label: 'Outros', preco, qtd: 1 });
+      renderResumo();
+    } else if (targetField === 'recebido') {
+      document.getElementById('valor-recebido').value = preco.toFixed(2).replace('.', ',');
+      if (formaPagamento === 'Dinheiro') {
+        const troco = preco - total;
+        document.getElementById('troco').textContent = troco.toFixed(2).replace('.', ',');
+      }
+    } else if (targetField === 'edit-qtd' && editingItemIndex !== null) {
+      const newQtd = parseInt(virtualValue);
+      if (!isNaN(newQtd) && newQtd > 0) {
+        resumo[editingItemIndex].qtd = newQtd;
+        renderResumo();
+      }
+      editingItemIndex = null;
+    }
+    else if (targetField === 'edit-preco' && editingItemIndex !== null) {
+      resumo[editingItemIndex].preco = preco;
+      renderResumo();
+      editingItemIndex = null;
+    }
+    document.getElementById('virtual-keyboard').style.display = 'none';
+  }
+});
+
+document.getElementById('vk-cancel').addEventListener('click', () => {
+  virtualValue = '';
+  document.getElementById('virtual-display').textContent = '0';
+  document.getElementById('virtual-keyboard').style.display = 'none';
+  editingItemIndex = null;
+});
+
+document.querySelectorAll('.pay-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    formaPagamento = btn.dataset.method;
+    document.getElementById('troco-area').style.display = (formaPagamento === 'Dinheiro') ? 'block' : 'none';
+
+    const valorRecebidoArea = document.getElementById('valor-recebido-area');
+    const valorRecebidoInput = document.getElementById('valor-recebido');
+    valorRecebidoArea.style.display = 'block';
+    if (formaPagamento === 'Dinheiro') {
+      valorRecebidoInput.value = '';
+      valorRecebidoInput.readOnly = true;
+    } else if (formaPagamento === 'Cartão/PIX') {
+      setTimeout(() => {
+        const totalStr = document.getElementById('total').textContent.trim().replace(',', '.');
+        const totalNum = parseFloat(totalStr);
+        if (!isNaN(totalNum)) {
+          valorRecebidoInput.value = totalNum.toFixed(2).replace('.', ',');
+        }
+        valorRecebidoInput.readOnly = true;
+      }, 50);
+    }
+  });
+});
+
+document.getElementById('next-btn').addEventListener('click', () => {
+  const inputEl = document.getElementById('valor-recebido');
+  const recebidoStr = inputEl.value;
+  const recebido = recebidoStr ? parseFloat(recebidoStr.replace(',', '.')) : 0;
+
+  if (!formaPagamento) return showNotification('Selecione uma forma de pagamento.');
+  if (!recebidoStr) return showNotification('Digite o valor recebido.');
+  if (formaPagamento === 'Dinheiro' && recebido < total) return showNotification('Valor recebido é menor que o total.');
+
+  const venda = {
+    timestamp: new Date().toISOString(),
+    itens: resumo,
+    total,
+    recebido,
+    troco: formaPagamento === 'Dinheiro' ? recebido - total : 0,
+    formaPagamento
+  };
+  const historico = JSON.parse(localStorage.getItem('salesHistory') || '[]');
+  historico.unshift(venda);
+  localStorage.setItem('salesHistory', JSON.stringify(historico));
+  showNotification('Venda registrada com sucesso');
+  location.reload();
+});
+
+document.getElementById('clear-btn').addEventListener('click', () => location.reload());
+document.getElementById('history-btn').addEventListener('click', () => window.open('historico.html', '_blank'));
+
+renderResumo();
+
+
+// Notificação flutuante customizada
+function showNotification(msg) {
+  const box = document.getElementById('notification-box');
+  const span = document.getElementById('notification-msg');
+  box.style.display = 'flex';
+  span.textContent = msg;
+  document.getElementById('notification-close').onclick = () => box.style.display = 'none';
+  clearTimeout(box.timeout);
+  box.timeout = setTimeout(() => { box.style.display = 'none'; }, 4000);
+}
+</script>
+
+<div id="notification-box" style="display:none;">
+  <span id="notification-msg"></span>
+  <button id="notification-close" title="Fechar">×</button>
+</div>
+
+</body>
+</html>
