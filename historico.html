@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Histórico de Vendas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+:root { --cor-primaria: #8B1E3F; --raio-botao: 0.5rem; }
+#back-btn {
+  background-color: var(--cor-primaria);
+  color: #fff;
+  border: none;
+  border-radius: var(--raio-botao);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+
+
+    body {
+      font-family: 'Poppins', 'Montserrat', sans-serif;
+      background: #FAFAFA;
+      margin: 0;
+      padding: 0 0 32px 0;
+      color: #212121;
+    }
+    h1 {
+      text-align: center;
+      color: #0277BD;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 2.2rem;
+      margin-top: 22px;
+      margin-bottom: 24px;
+      letter-spacing: 0.03em;
+    }
+    .container {
+      max-width: 650px;
+      margin: auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+      padding: 24px 18px 12px 18px;
+    }
+    .venda-card {
+      background: #e3f2fd;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(2,119,189,0.04);
+      margin-bottom: 18px;
+      padding: 18px 14px 14px 14px;
+      border-left: 5px solid #0277BD;
+    }
+    .data-venda {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      color: #1565c0;
+      font-size: 1.07rem;
+      margin-bottom: 6px;
+    }
+    .itens-lista {
+      margin: 0 0 8px 0;
+      padding-left: 18px;
+    }
+    .itens-lista li {
+      font-size: 1.02rem;
+      margin-bottom: 2px;
+      font-family: 'Poppins', sans-serif;
+    }
+    .resumo {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px 22px;
+      align-items: center;
+      font-size: 1.08rem;
+    }
+    .campo {
+      margin-right: 12px;
+    }
+    .campo strong {
+      font-weight: 600;
+      color: #37474F;
+    }
+    .total-valor {
+      font-size: 1.36rem;
+      font-weight: 700;
+      color: #0277BD;
+      margin-left: 2px;
+      margin-right: 14px;
+      letter-spacing: 0.04em;
+    }
+    .campo-troco {
+      color: #e53935;
+      font-size: 1.11rem;
+      font-weight: 600;
+      margin-left: 12px;
+    }
+    .campo-recebido {
+      color: #43a047;
+      font-weight: 600;
+      font-size: 1.08rem;
+      margin-left: 8px;
+    }
+    .no-vendas {
+      color: #c62828;
+      font-size: 1.18rem;
+      font-family: 'Montserrat', sans-serif;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .btn-voltar {
+      display: block;
+      margin: 22px auto 0 auto;
+      background: #43a047;
+      color: white;
+      font-size: 1.15rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 44px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-voltar:hover {
+      background: #388e3c;
+      transform: scale(1.03);
+    }
+    @media (max-width: 700px) {
+      .container { max-width: 100vw; padding: 8vw 3vw 2vw 3vw; }
+      h1 { font-size: 1.28rem; }
+      .total-valor { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Histórico de Vendas</h1>
+<button id="back-btn" onclick="window.location.href='index.html'">← Voltar ao Caixa</button>
+  <div class="container" id="historico-lista">
+    <!-- Cards do histórico vão aqui -->
+  </div>
+  
+  <script>
+    function formatarDataHora(isoString) {
+      const dt = new Date(isoString);
+      return dt.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+    }
+    function formatarMoeda(valor) {
+      return 'R$ ' + Number(valor).toFixed(2).replace('.', ',');
+    }
+    function renderHistorico() {
+      const historico = JSON.parse(localStorage.getItem('salesHistory') || '[]');
+      const lista = document.getElementById('historico-lista');
+      if (!historico.length) {
+        lista.innerHTML = '<div class="no-vendas">Nenhuma venda registrada ainda.</div>';
+        return;
+      }
+      lista.innerHTML = '';
+      historico.forEach(venda => {
+        let itensHTML = '<ul class="itens-lista">';
+        venda.itens.forEach(item => {
+          itensHTML += `<li>${item.qtd}x ${item.label} <small>(${formatarMoeda(item.preco)})</small> — <strong>${formatarMoeda(item.qtd * item.preco)}</strong></li>`;
+        });
+        itensHTML += '</ul>';
+        lista.innerHTML += `
+          <div class="venda-card">
+            <div class="data-venda">${formatarDataHora(venda.timestamp)}</div>
+            ${itensHTML}
+            <div class="resumo">
+              <span class="campo"><strong>Total:</strong> <span class="total-valor">${formatarMoeda(venda.total)}</span></span>
+              <span class="campo"><strong>Recebido:</strong> <span class="campo-recebido">${formatarMoeda(venda.recebido)}</span></span>
+              <span class="campo"><strong>Pagamento:</strong> ${venda.formaPagamento}</span>
+              ${venda.formaPagamento === 'Dinheiro' ? `<span class="campo campo-troco"><strong>Troco:</strong> ${formatarMoeda(venda.troco)}</span>` : ''}
+            </div>
+          </div>
+        `;
+      });
+    }
+    renderHistorico();
+  </script>
+</body>
+</html>
