@@ -1,0 +1,284 @@
+
+/* Bloqueio total de seleção de texto */
+* {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+button, .summary-label, .summary-item, .bread-btn {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+* {
+  user-select: none;
+  -webkit-user-select: none;
+}
+body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 16px;
+      background: #FAFAFA;
+      color: #212121;
+    }
+    
+#titulo-caixa {
+  text-align: center;
+  color: #0277BD;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 2.8rem;
+  letter-spacing: 0.03em;
+  margin-top: 18px;
+  margin-bottom: 22px;
+}
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .buttons-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(to right, #039BE5, #0288D1);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+      flex: 1 1 calc(50% - 12px);
+      min-width: 120px;
+      text-align: center;
+    }
+    button:hover {
+      transform: scale(1.05);
+    }
+    .pay-btn.selected { background: #43A047 !important; }
+    .summary {
+      background: #ECEFF1;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .action-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    #summary-list {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 10px;
+    
+  max-height: 242px;
+  overflow-y: auto;
+  transition: box-shadow 0.2s;
+}
+    .summary-item {
+      display: grid;
+      grid-template-columns: 1fr auto min-content;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      border-radius: 8px;
+      padding: 3px 6px 3px 8px;
+      transition: background 0.15s;
+    }
+    .summary-label {
+      font-size: 1rem;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .summary-price {
+      margin-left: 8px;
+      font-weight: bold;
+      color: #37474F;
+      min-width: 68px;
+      text-align: right;
+    }
+    
+.trash-btn {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 26px !important;
+  height: 26px !important;
+  justify-self: end !important;
+  flex-shrink: 0 !important;
+}
+
+    .trash-btn:hover img {
+      filter: brightness(0.7);
+    }
+    
+.trash-icon {
+  width: 20px !important;
+  height: 20px !important;
+  display: block !important;
+}
+
+    #virtual-keyboard {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0px;
+      background: #fff;
+      border-top: 2px solid #bdbdbd;
+      box-shadow: 0 -2px 16px rgba(2,119,189,0.09);
+      border-radius: 18px 18px 0 0;
+      display: none;
+      z-index: 1000;
+      width: 100vw;
+      max-width: 360px;
+      padding: 6px 7px 10px 7px;
+      margin: 0 auto;
+    }
+    #virtual-display {
+      background: #ffe082;
+      color: #212121;
+      font-size: 1.7rem;
+      font-weight: bold;
+      border-radius: 8px;
+      padding: 8px 0;
+      margin-bottom: 7px;
+      text-align: right;
+      letter-spacing: 1px;
+    }
+    .vk-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 7px;
+    }
+    .vk-btn {
+      padding: 12px 0;
+      font-size: 1.1rem;
+      background: #0288d1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      min-width: 0;
+      min-height: 0;
+    }
+    .vk-btn:active {
+      background: #0277bd;
+      transform: scale(0.97);
+    }
+    .vk-action-row {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+    }
+    .vk-cancel {
+      background: #e53935 !important;
+      font-weight: bold;
+      min-width: 60px;
+    }
+    .vk-enter {
+      background: #43A047 !important;
+      font-weight: bold;
+      min-width: 80px;
+    }
+    #valor-recebido-area {
+      margin-bottom: 10px;
+    }
+    #valor-recebido {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.28rem;
+      margin: 10px 0 0 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      text-align: right;
+      background: #fffde7;
+      color: #333;
+      font-weight: bold;
+    }
+  
+#notification-box {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff3f3;
+  color: #c62828;
+  border: 2px solid #ef5350;
+  min-width: 220px;
+  max-width: 90vw;
+  padding: 18px 36px 18px 18px;
+  border-radius: 12px;
+  font-size: 1.08rem;
+  box-shadow: 0 4px 16px rgba(230,50,40,0.13);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-weight: 500;
+  animation: notification-in 0.21s;
+}
+@keyframes notification-in {
+  from { opacity: 0; transform: translate(-50%, -20px);}
+  to { opacity: 1; transform: translate(-50%, 0);}
+}
+#notification-close {
+  background: none;
+  border: none;
+  color: #b71c1c;
+  font-size: 1.3em;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 14px;
+  padding: 0 6px;
+  border-radius: 6px;
+  line-height: 1;
+}
+#notification-close:hover {
+  background: #ffeaea;
+}
+
+
+#total-area {
+  font-size: 1.62rem;
+  color: #0277BD;
+  font-weight: 700;
+  text-align: right;
+  margin: 18px 0 10px 0;
+  letter-spacing: 0.04em;
+}
+
+
+#troco-area {
+  font-size: 1.28rem;
+  color: #e53935;
+  font-weight: 700;
+  text-align: right;
+  margin: 6px 0 8px 0;
+  letter-spacing: 0.02em;
+}
